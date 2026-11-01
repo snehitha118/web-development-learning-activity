@@ -1,1 +1,630 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduLearn - Online Learning Platform</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #222;
+}
+
+/* NAVBAR */
+header {
+    background: white;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    box-shadow: 0 2px 10px #00000010;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    color: #4c56d9;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    margin-left: 20px;
+    font-weight: 500;
+}
+
+nav a:hover {
+    color: #4c56d9;
+}
+
+/* HERO */
+.hero {
+    padding: 65px 7%;
+    background: linear-gradient(120deg, #424fd1, #8276ed);
+    color: white;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    margin-bottom: 25px;
+    font-size: 17px;
+}
+
+.search {
+    width: 90%;
+    max-width: 500px;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+}
+
+/* CONTAINER */
+.container {
+    padding: 40px 7%;
+}
+
+.section-title {
+    font-size: 27px;
+    margin-bottom: 25px;
+    color: #24243a;
+}
+
+/* CATEGORIES */
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.categories button {
+    padding: 11px 20px;
+    border: 1px solid #4c56d9;
+    border-radius: 25px;
+    background: white;
+    color: #4c56d9;
+    cursor: pointer;
+}
+
+.categories button:hover,
+.categories button.active {
+    background: #4c56d9;
+    color: white;
+}
+
+/* COURSE GRID */
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.course-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px #00000010;
+    transition: 0.3s;
+}
+
+.course-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 25px #00000018;
+}
+
+.thumbnail {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.course-info {
+    padding: 20px;
+}
+
+.tag {
+    color: #4c56d9;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.course-info h3 {
+    margin: 12px 0;
+    font-size: 20px;
+}
+
+.description {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.instructor {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.instructor img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.instructor p {
+    font-size: 13px;
+    color: #555;
+}
+
+.objectives {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.course-details {
+    color: #777;
+    font-size: 13px;
+    margin: 10px 0;
+}
+
+.enroll-btn {
+    width: 100%;
+    padding: 12px;
+    background: #4c56d9;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.enroll-btn:hover {
+    background: #303ab5;
+}
+
+.enroll-btn:disabled {
+    background: #20a46b;
+    cursor: default;
+}
+
+/* PROGRESS */
+.progress-section {
+    background: white;
+    padding: 25px;
+    margin-top: 40px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px #00000010;
+}
+
+.progress-section h2 {
+    margin-bottom: 20px;
+}
+
+.progress-item {
+    margin-bottom: 20px;
+}
+
+.progress-item p {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.progress-bar {
+    background: #e5e7eb;
+    height: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #4c56d9;
+    width: 0%;
+    transition: width 0.4s;
+}
+
+/* FOOTER */
+footer {
+    background: #20213c;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 7px;
+    color: #ccc;
+}
+
+.empty {
+    text-align: center;
+    padding: 30px;
+    color: #777;
+    grid-column: 1/-1;
+}
+
+@media(max-width:600px) {
+    header {
+        justify-content: center;
+    }
+
+    nav a {
+        margin: 8px;
+    }
+
+    .hero h1 {
+        font-size: 29px;
+    }
+
+    .container {
+        padding: 30px 5%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<header>
+    <div class="logo">🎓 EduLearn</div>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#courses">Courses</a>
+        <a href="#progress">My Learning</a>
+        <a href="#about">About</a>
+    </nav>
+</header>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <h1>Learn New Skills, Build Your Future!</h1>
+    <p>Explore expert-led courses and learn anytime, anywhere.</p>
+
+    <input
+        type="text"
+        class="search"
+        id="search"
+        placeholder="Search for courses..."
+    >
+</section>
+
+<!-- COURSES -->
+<section class="container" id="courses">
+
+    <h2 class="section-title">Explore Courses</h2>
+
+    <div class="categories">
+        <button class="active" onclick="filterCourses('All',this)">All</button>
+        <button onclick="filterCourses('Programming',this)">Programming</button>
+        <button onclick="filterCourses('Web Development',this)">Web Development</button>
+        <button onclick="filterCourses('Cybersecurity',this)">Cybersecurity</button>
+        <button onclick="filterCourses('AI & Data Science',this)">AI & Data Science</button>
+    </div>
+
+    <div class="course-grid" id="courseGrid"></div>
+
+</section>
+
+<!-- LEARNING PROGRESS -->
+<section class="container" id="progress">
+
+    <div class="progress-section">
+        <h2>📊 My Learning Progress</h2>
+        <div id="progressList">
+            <p style="color:#777">Enroll in a course to track your learning progress.</p>
+        </div>
+    </div>
+
+</section>
+
+<!-- ABOUT -->
+<section class="container" id="about">
+    <h2 class="section-title">About EduLearn</h2>
+
+    <p style="color:#666;line-height:1.8">
+        EduLearn is an online learning platform designed to help
+        students develop technical and professional skills.
+        Students can explore different courses, learn from expert
+        instructors, understand course objectives and track their
+        learning progress.
+    </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <h2>🎓 EduLearn</h2>
+    <p>Learn Today, Lead Tomorrow.</p>
+    <p>© 2026 EduLearn Online Learning Platform</p>
+</footer>
+
+<script>
+
+// COURSE DATA
+
+const courses = [
+{
+    title: "Java Programming",
+    category: "Programming",
+    instructor: "John Smith",
+    duration: "8 Weeks",
+    lessons: 40,
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600",
+    profile: "https://randomuser.me/api/portraits/men/32.jpg",
+    description: "Learn Java from basics to advanced concepts with practical coding examples.",
+    objectives: ["Java Fundamentals", "OOP Concepts", "Arrays and Methods"]
+},
+{
+    title: "Python for Beginners",
+    category: "Programming",
+    instructor: "Sarah Johnson",
+    duration: "6 Weeks",
+    lessons: 30,
+    image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=600",
+    profile: "https://randomuser.me/api/portraits/women/44.jpg",
+    description: "Master Python programming and develop problem-solving skills.",
+    objectives: ["Python Basics", "Loops and Functions", "Mini Projects"]
+},
+{
+    title: "Full Stack Web Development",
+    category: "Web Development",
+    instructor: "David Miller",
+    duration: "12 Weeks",
+    lessons: 50,
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600",
+    profile: "https://randomuser.me/api/portraits/men/45.jpg",
+    description: "Build modern websites using HTML, CSS, JavaScript and backend technologies.",
+    objectives: ["HTML and CSS", "JavaScript", "Website Development"]
+},
+{
+    title: "Ethical Hacking",
+    category: "Cybersecurity",
+    instructor: "Alex Wilson",
+    duration: "10 Weeks",
+    lessons: 45,
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600",
+    profile: "https://randomuser.me/api/portraits/men/52.jpg",
+    description: "Understand cybersecurity fundamentals and ethical hacking techniques.",
+    objectives: ["Network Security", "Linux Basics", "Penetration Testing"]
+},
+{
+    title: "Artificial Intelligence",
+    category: "AI & Data Science",
+    instructor: "Emily Brown",
+    duration: "9 Weeks",
+    lessons: 38,
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600",
+    profile: "https://randomuser.me/api/portraits/women/68.jpg",
+    description: "Explore artificial intelligence, machine learning and intelligent systems.",
+    objectives: ["AI Fundamentals", "Machine Learning", "Neural Networks"]
+},
+{
+    title: "Data Science with Python",
+    category: "AI & Data Science",
+    instructor: "Michael Lee",
+    duration: "8 Weeks",
+    lessons: 35,
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600",
+    profile: "https://randomuser.me/api/portraits/men/65.jpg",
+    description: "Learn data analysis, visualization and data science using Python.",
+    objectives: ["Data Analysis", "Pandas and NumPy", "Data Visualization"]
+}
+];
+
+let enrolled = {};
+let currentCategory = "All";
+
+const grid = document.getElementById("courseGrid");
+const search = document.getElementById("search");
+
+// DISPLAY COURSES
+
+function displayCourses(list) {
+
+    grid.innerHTML = "";
+
+    if(list.length === 0) {
+        grid.innerHTML = '<p class="empty">No courses found!</p>';
+        return;
+    }
+
+    list.forEach(course => {
+
+        const index = courses.indexOf(course);
+        const isEnrolled = enrolled[index] !== undefined;
+
+        const card = document.createElement("div");
+        card.className = "course-card";
+
+        card.innerHTML = `
+            <img class="thumbnail"
+                 src="${course.image}"
+                 alt="${course.title} video thumbnail">
+
+            <div class="course-info">
+
+                <span class="tag">${course.category}</span>
+
+                <h3>${course.title}</h3>
+
+                <p class="description">${course.description}</p>
+
+                <div class="instructor">
+                    <img src="${course.profile}" alt="Instructor">
+                    <p>Instructor: <strong>${course.instructor}</strong></p>
+                </div>
+
+                <p class="course-details">
+                    ⏱ ${course.duration} | 📚 ${course.lessons} Lessons
+                </p>
+
+                <div class="objectives">
+                    <strong>Learning Objectives:</strong>
+                    <ul>
+                        ${course.objectives.map(item => `<li>${item}</li>`).join("")}
+                    </ul>
+                </div>
+
+                <button class="enroll-btn"
+                    onclick="enrollCourse(${index})"
+                    ${isEnrolled ? "disabled" : ""}>
+                    ${isEnrolled ? "✓ Enrolled" : "Enroll Now"}
+                </button>
+
+            </div>
+        `;
+
+        grid.appendChild(card);
+    });
+}
+
+// FILTER COURSES
+
+function filterCourses(category, button) {
+
+    currentCategory = category;
+
+    document.querySelectorAll(".categories button")
+        .forEach(btn => btn.classList.remove("active"));
+
+    button.classList.add("active");
+
+    applyFilters();
+}
+
+// SEARCH COURSES
+
+function applyFilters() {
+
+    const keyword = search.value.toLowerCase();
+
+    const filtered = courses.filter(course => {
+
+        const matchesCategory =
+            currentCategory === "All" ||
+            course.category === currentCategory;
+
+        const matchesSearch =
+            course.title.toLowerCase().includes(keyword) ||
+            course.instructor.toLowerCase().includes(keyword);
+
+        return matchesCategory && matchesSearch;
+    });
+
+    displayCourses(filtered);
+}
+
+// ENROLLMENT
+
+function enrollCourse(index) {
+
+    if(enrolled[index] !== undefined) {
+        return;
+    }
+
+    enrolled[index] = 0;
+
+    alert("Successfully enrolled in " + courses[index].title + "!");
+
+    applyFilters();
+    updateProgress();
+}
+
+// UPDATE PROGRESS
+
+function updateProgress() {
+
+    const progressList = document.getElementById("progressList");
+
+    const enrolledCourses = Object.keys(enrolled);
+
+    if(enrolledCourses.length === 0) {
+        progressList.innerHTML =
+        "<p style='color:#777'>No courses enrolled yet.</p>";
+        return;
+    }
+
+    progressList.innerHTML = "";
+
+    enrolledCourses.forEach(index => {
+
+        const course = courses[index];
+        const progress = enrolled[index];
+
+        const item = document.createElement("div");
+        item.className = "progress-item";
+
+        item.innerHTML = `
+            <p><strong>${course.title}</strong> - ${progress}% completed</p>
+
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:${progress}%"></div>
+            </div>
+
+            <button onclick="completeLesson(${index})"
+                style="margin-top:10px;padding:8px 12px;
+                background:#4c56d9;color:white;border:none;
+                border-radius:5px;cursor:pointer">
+                Complete Next Lesson
+            </button>
+        `;
+
+        progressList.appendChild(item);
+    });
+}
+
+// COMPLETE LESSON
+
+function completeLesson(index) {
+
+    if(enrolled[index] < 100) {
+        enrolled[index] = Math.min(
+            100,
+            enrolled[index] + Math.ceil(100 / courses[index].lessons)
+        );
+    }
+
+    updateProgress();
+
+    if(enrolled[index] === 100) {
+        alert("Congratulations! You completed " + courses[index].title);
+    }
+}
+
+search.addEventListener("input", applyFilters);
+
+// INITIAL DISPLAY
+
+displayCourses(courses);
+
+</script>
+
+</body>
+</html>
+
