@@ -1,1 +1,469 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CineScope | Movie Reviews</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #101018;
+    color: white;
+}
+
+header {
+    background: #191923;
+    padding: 22px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    color: #ffcc33;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+nav a:hover {
+    color: #ffcc33;
+}
+
+.hero {
+    padding: 65px 7%;
+    text-align: center;
+    background: linear-gradient(135deg, #29213e, #101018);
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    color: #ccc;
+    margin-bottom: 25px;
+}
+
+.search-box {
+    padding: 13px;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+}
+
+.container {
+    padding: 35px 7%;
+}
+
+.section-title {
+    font-size: 27px;
+    margin-bottom: 25px;
+    border-left: 5px solid #ffcc33;
+    padding-left: 12px;
+}
+
+.filters {
+    margin-bottom: 25px;
+}
+
+.filters button {
+    padding: 9px 17px;
+    margin: 5px;
+    border: 1px solid #ffcc33;
+    background: transparent;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.filters button:hover,
+.filters button.active {
+    background: #ffcc33;
+    color: black;
+}
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 25px;
+}
+
+.movie-card {
+    background: #1d1d29;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.movie-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 10px 25px #0008;
+}
+
+.movie-card img {
+    width: 100%;
+    height: 340px;
+    object-fit: cover;
+}
+
+.movie-info {
+    padding: 18px;
+}
+
+.movie-info h3 {
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.genre {
+    color: #ffcc33;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.details {
+    color: #bbb;
+    font-size: 13px;
+    margin: 7px 0;
+    line-height: 1.5;
+}
+
+.rating {
+    color: #ffcc33;
+    margin: 12px 0;
+    font-weight: bold;
+}
+
+.review {
+    font-size: 14px;
+    color: #ddd;
+    line-height: 1.5;
+    margin: 10px 0;
+}
+
+.cast {
+    font-size: 13px;
+    color: #aaa;
+    margin: 10px 0;
+}
+
+.synopsis {
+    font-size: 14px;
+    color: #ccc;
+    line-height: 1.5;
+    margin: 12px 0;
+}
+
+.rate-btn {
+    width: 100%;
+    padding: 11px;
+    background: #ffcc33;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.rate-btn:hover {
+    background: #f0b900;
+}
+
+footer {
+    text-align: center;
+    background: #191923;
+    padding: 25px;
+    color: #aaa;
+    margin-top: 40px;
+}
+
+.no-results {
+    color: #ccc;
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: 30px;
+}
+
+@media(max-width:600px) {
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    header {
+        justify-content: center;
+    }
+
+    nav a {
+        margin: 8px;
+    }
+
+    .movie-card img {
+        height: 300px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🎬 CineScope</div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#movies">Movies</a>
+        <a href="#about">About</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>Discover. Watch. Review.</h1>
+    <p>Explore movies, read critic reviews and share your ratings.</p>
+    <input
+        type="text"
+        class="search-box"
+        id="search"
+        placeholder="Search your favourite movie..."
+    >
+</section>
+
+<section class="container" id="movies">
+
+    <h2 class="section-title">Popular Movies</h2>
+
+    <div class="filters">
+        <button class="active" onclick="filterMovies('All', this)">All</button>
+        <button onclick="filterMovies('Action', this)">Action</button>
+        <button onclick="filterMovies('Sci-Fi', this)">Sci-Fi</button>
+        <button onclick="filterMovies('Drama', this)">Drama</button>
+        <button onclick="filterMovies('Adventure', this)">Adventure</button>
+    </div>
+
+    <div class="movie-grid" id="movieGrid"></div>
+
+</section>
+
+<section class="container" id="about">
+    <h2 class="section-title">About CineScope</h2>
+    <p style="color:#ccc;line-height:1.8">
+        CineScope is a movie review and rating platform where users
+        can discover films, explore genres, check release dates,
+        learn about actors, read critic reviews and rate their
+        favourite movies.
+    </p>
+</section>
+
+<footer>
+    <p>© 2026 CineScope | Movie Review & Rating Website</p>
+    <p>Created by a Movie Lover ❤️</p>
+</footer>
+
+<script>
+
+const movies = [
+{
+    title: "Inception",
+    genre: "Sci-Fi",
+    date: "2010",
+    cast: "Leonardo DiCaprio, Joseph Gordon-Levitt",
+    rating: 8.8,
+    image: "https://image.tmdb.org/t/p/w500/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg",
+    synopsis: "A skilled thief enters people's dreams to steal secrets. He receives an unusual mission to plant an idea in someone's mind.",
+    review: "A brilliant combination of science fiction, action and mind-bending storytelling."
+},
+{
+    title: "Interstellar",
+    genre: "Sci-Fi",
+    date: "2014",
+    cast: "Matthew McConaughey, Anne Hathaway",
+    rating: 8.7,
+    image: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+    synopsis: "A team of astronauts travels through a wormhole in search of a new home for humanity.",
+    review: "An emotional and visually stunning journey through space and time."
+},
+{
+    title: "The Dark Knight",
+    genre: "Action",
+    date: "2008",
+    cast: "Christian Bale, Heath Ledger",
+    rating: 9.0,
+    image: "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+    synopsis: "Batman faces the Joker, a criminal mastermind who brings chaos to Gotham City.",
+    review: "An outstanding superhero film with unforgettable performances."
+},
+{
+    title: "Dune",
+    genre: "Adventure",
+    date: "2021",
+    cast: "Timothée Chalamet, Zendaya",
+    rating: 8.0,
+    image: "https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg",
+    synopsis: "Paul Atreides travels to a dangerous desert planet that holds the future of his family and people.",
+    review: "An impressive science-fiction adventure with beautiful cinematography."
+},
+{
+    title: "Spider-Man: Across the Spider-Verse",
+    genre: "Action",
+    date: "2023",
+    cast: "Shameik Moore, Hailee Steinfeld",
+    rating: 8.6,
+    image: "https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+    synopsis: "Miles Morales enters the multiverse and meets a team of Spider-People protecting different dimensions.",
+    review: "A visually creative and exciting animated superhero adventure."
+},
+{
+    title: "Oppenheimer",
+    genre: "Drama",
+    date: "2023",
+    cast: "Cillian Murphy, Emily Blunt",
+    rating: 8.3,
+    image: "https://image.tmdb.org/t/p/w500/ptpr0kGAckfQkJeJIt8st5dglvd.jpg",
+    synopsis: "The story of J. Robert Oppenheimer and his role in developing the first atomic bomb.",
+    review: "A powerful historical drama with excellent performances and direction."
+}
+];
+
+const grid = document.getElementById("movieGrid");
+const search = document.getElementById("search");
+
+let currentGenre = "All";
+let userRatings = {};
+
+function displayMovies(list) {
+
+    grid.innerHTML = "";
+
+    if (list.length === 0) {
+        grid.innerHTML = '<p class="no-results">No movies found!</p>';
+        return;
+    }
+
+    list.forEach(movie => {
+
+        const index = movies.indexOf(movie);
+
+        const card = document.createElement("div");
+        card.className = "movie-card";
+
+        card.innerHTML = `
+            <img src="${movie.image}" alt="${movie.title} poster"
+                 onerror="this.src='https://placehold.co/500x750/222222/ffcc33?text=Movie+Poster'">
+
+            <div class="movie-info">
+
+                <h3>${movie.title}</h3>
+
+                <p class="genre">${movie.genre}</p>
+
+                <p class="details">📅 Release: ${movie.date}</p>
+
+                <p class="cast">🎭 Cast: ${movie.cast}</p>
+
+                <p class="synopsis">
+                    <strong>Synopsis:</strong> ${movie.synopsis}
+                </p>
+
+                <p class="rating">
+                    ⭐ Critic Rating: ${movie.rating}/10
+                </p>
+
+                <p class="review">
+                    <strong>Critic Review:</strong> ${movie.review}
+                </p>
+
+                <p class="rating" id="userRating${index}">
+                    Your Rating: ${userRatings[index] ? userRatings[index] + "/10" : "Not rated"}
+                </p>
+
+                <button class="rate-btn" onclick="rateMovie(${index})">
+                    Rate This Movie
+                </button>
+
+            </div>
+        `;
+
+        grid.appendChild(card);
+    });
+}
+
+function filterMovies(genre, button) {
+
+    currentGenre = genre;
+
+    document.querySelectorAll(".filters button").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    applyFilters();
+}
+
+function applyFilters() {
+
+    const keyword = search.value.toLowerCase();
+
+    const filtered = movies.filter(movie => {
+
+        const matchesGenre =
+            currentGenre === "All" || movie.genre === currentGenre;
+
+        const matchesSearch =
+            movie.title.toLowerCase().includes(keyword);
+
+        return matchesGenre && matchesSearch;
+    });
+
+    displayMovies(filtered);
+}
+
+function rateMovie(index) {
+
+    let rating = prompt("Enter your rating from 1 to 10:");
+
+    if (rating === null || rating.trim() === "") {
+        return;
+    }
+
+    rating = Number(rating);
+
+    if (!Number.isInteger(rating) || rating < 1 || rating > 10) {
+        alert("Please enter a valid rating between 1 and 10.");
+        return;
+    }
+
+    userRatings[index] = rating;
+
+    alert("Thank you for rating " + movies[index].title + "!");
+
+    applyFilters();
+}
+
+search.addEventListener("input", applyFilters);
+
+displayMovies(movies);
+
+</script>
+
+</body>
+</html>
+
